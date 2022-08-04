@@ -89,7 +89,7 @@ export default function createGlobalStyle<Props = unknown>(
     } else {
       const context = {
         ...props,
-        theme: determineTheme(props, theme, GlobalStyleComponent.defaultProps),
+        blueprint: determineTheme(props, theme, GlobalStyleComponent.defaultProps),
       } as ExecutionContext & Props;
 
       globalStyle.renderStyles(instance, context, styleSheet, stylis);

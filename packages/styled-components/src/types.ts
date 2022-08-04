@@ -43,11 +43,11 @@ export interface ExtensibleObject extends BaseExtensibleObject {
   $forwardedAs?: KnownTarget;
   as?: KnownTarget;
   forwardedAs?: KnownTarget;
-  theme?: DefaultTheme;
+  blueprint?: DefaultTheme;
 }
 
 export interface ExecutionContext extends ExtensibleObject {
-  theme: DefaultTheme;
+  blueprint: DefaultTheme;
 }
 
 export interface StyleFunction<Props = ExecutionContext> {
