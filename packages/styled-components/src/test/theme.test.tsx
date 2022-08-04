@@ -15,11 +15,11 @@ describe('theming', () => {
 
   it('should inject props.theme into a styled component', () => {
     const Comp = styled.div`
-      color: ${props => props.theme.color};
+      color: ${props => props.blueprint.color};
     `;
     const theme = { color: 'black' };
     TestRenderer.create(
-      <ThemeProvider theme={theme}>
+      <ThemeProvider blueprint={theme}>
         <Comp />
       </ThemeProvider>
     );
@@ -32,11 +32,11 @@ describe('theming', () => {
 
   it('should inject props.theme into a styled component multiple levels deep', () => {
     const Comp = styled.div`
-      color: ${props => props.theme.color};
+      color: ${props => props.blueprint.color};
     `;
     const theme = { color: 'black' };
     TestRenderer.create(
-      <ThemeProvider theme={theme}>
+      <ThemeProvider blueprint={theme}>
         <div>
           <div>
             <Comp />
@@ -53,11 +53,11 @@ describe('theming', () => {
 
   it('should properly allow a component to fallback to its default props when a theme is not provided', () => {
     const Comp1 = styled.div`
-      color: ${props => props.theme.test.color};
+      color: ${props => props.blueprint.test.color};
     `;
 
     Comp1.defaultProps = {
-      theme: {
+      blueprint: {
         test: {
           color: 'purple',
         },
@@ -78,11 +78,11 @@ describe('theming', () => {
   // https://github.com/styled-components/styled-components/issues/344
   it('should use ThemeProvider theme instead of defaultProps theme', () => {
     const Comp1 = styled.div`
-      color: ${props => props.theme.test.color};
+      color: ${props => props.blueprint.test.color};
     `;
 
     Comp1.defaultProps = {
-      theme: {
+      blueprint: {
         test: {
           color: 'purple',
         },
@@ -91,7 +91,7 @@ describe('theming', () => {
     const theme = { test: { color: 'green' } };
 
     TestRenderer.create(
-      <ThemeProvider theme={theme}>
+      <ThemeProvider blueprint={theme}>
         <Comp1 />
       </ThemeProvider>
     );
@@ -104,11 +104,11 @@ describe('theming', () => {
 
   it('should properly allow a component to override the theme with a prop even if it is equal to defaultProps theme', () => {
     const Comp1 = styled.div`
-      color: ${props => props.theme.test.color};
+      color: ${props => props.blueprint.test.color};
     `;
 
     Comp1.defaultProps = {
-      theme: {
+      blueprint: {
         test: {
           color: 'purple',
         },
@@ -117,8 +117,8 @@ describe('theming', () => {
     const theme = { test: { color: 'green' } };
 
     TestRenderer.create(
-      <ThemeProvider theme={theme}>
-        <Comp1 theme={{ test: { color: 'purple' } }} />
+      <ThemeProvider blueprint={theme}>
+        <Comp1 blueprint={{ test: { color: 'purple' } }} />
       </ThemeProvider>
     );
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
@@ -130,7 +130,7 @@ describe('theming', () => {
 
   it('should properly allow a component to override the theme with a prop', () => {
     const Comp = styled.div`
-      color: ${props => props.theme.color};
+      color: ${props => props.blueprint.color};
     `;
 
     const theme = {
@@ -139,8 +139,8 @@ describe('theming', () => {
 
     TestRenderer.create(
       <div>
-        <ThemeProvider theme={theme}>
-          <Comp theme={{ color: 'red' }} />
+        <ThemeProvider blueprint={theme}>
+          <Comp blueprint={{ color: 'red' }} />
         </ThemeProvider>
       </div>
     );
@@ -153,16 +153,16 @@ describe('theming', () => {
 
   it('should only inject props.theme into styled components within its child component tree', () => {
     const Comp1 = styled.div`
-      color: ${props => props.theme.color || 'red'};
+      color: ${props => props.blueprint.color || 'red'};
     `;
     const Comp2 = styled.div`
-      color: ${props => props.theme.color || 'red'};
+      color: ${props => props.blueprint.color || 'red'};
     `;
 
     const theme = { color: 'black' };
     TestRenderer.create(
       <div>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider blueprint={theme}>
           <div>
             <Comp1 />
           </div>
@@ -182,14 +182,14 @@ describe('theming', () => {
 
   it('should inject props.theme into all styled components within the child component tree', () => {
     const Comp1 = styled.div`
-      color: ${props => props.theme.color};
+      color: ${props => props.blueprint.color};
     `;
     const Comp2 = styled.div`
-      background: ${props => props.theme.color};
+      background: ${props => props.blueprint.color};
     `;
     const theme = { color: 'black' };
     TestRenderer.create(
-      <ThemeProvider theme={theme}>
+      <ThemeProvider blueprint={theme}>
         <div>
           <div>
             <Comp1 />
@@ -210,7 +210,7 @@ describe('theming', () => {
 
   it('should inject new CSS when the theme changes', () => {
     const Comp = styled.div`
-      color: ${props => props.theme.color};
+      color: ${props => props.blueprint.color};
     `;
     const originalTheme = { color: 'black' };
     const newTheme = { color: 'blue' };
@@ -218,7 +218,7 @@ describe('theming', () => {
     // Force render the component
     const renderComp = () => {
       TestRenderer.create(
-        <ThemeProvider theme={theme}>
+        <ThemeProvider blueprint={theme}>
           <Comp />
         </ThemeProvider>
       );
@@ -244,11 +244,11 @@ describe('theming', () => {
 
   it('should properly render with the same theme from default props on re-render', () => {
     const Comp1 = styled.div`
-      color: ${props => props.theme.color};
+      color: ${props => props.blueprint.color};
     `;
 
     Comp1.defaultProps = {
-      theme: {
+      blueprint: {
         color: 'purple',
       },
     };
@@ -272,12 +272,12 @@ describe('theming', () => {
 
   it('should properly update style if theme is changed', () => {
     const Comp1 = styled.div`
-      color: ${props => props.theme.color};
+      color: ${props => props.blueprint.color};
     `;
 
     const wrapper = TestRenderer.create(
       <ThemeProvider
-        theme={{
+        blueprint={{
           color: 'purple',
         }}
       >
@@ -292,7 +292,7 @@ describe('theming', () => {
 
     wrapper.update(
       <ThemeProvider
-        theme={{
+        blueprint={{
           color: 'pink',
         }}
       >
@@ -311,7 +311,7 @@ describe('theming', () => {
 
   it('should properly update style if props used in styles is changed', () => {
     const Comp1 = styled.div`
-      color: ${props => props.theme.color};
+      color: ${props => props.blueprint.color};
       z-index: ${props => props.zIndex};
     `;
 
@@ -321,7 +321,7 @@ describe('theming', () => {
 
     const wrapper = TestRenderer.create(
       <ThemeProvider
-        theme={{
+        blueprint={{
           color: 'purple',
         }}
       >
@@ -338,7 +338,7 @@ describe('theming', () => {
 
     wrapper.update(
       <ThemeProvider
-        theme={{
+        blueprint={{
           color: 'pink',
         }}
       >
@@ -360,7 +360,7 @@ describe('theming', () => {
     Comp1.defaultProps.zIndex = 1;
     wrapper.update(
       <ThemeProvider
-        theme={{
+        blueprint={{
           color: 'pink',
         }}
       >
@@ -385,14 +385,14 @@ describe('theming', () => {
 
   it('should change the classnames when the theme changes', () => {
     const Comp = styled.div`
-      color: ${props => props.theme.color};
+      color: ${props => props.blueprint.color};
     `;
 
     const originalTheme = { color: 'black' };
     const newTheme = { color: 'blue' };
 
     const Theme = ({ theme }) => (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider blueprint={theme}>
         <Comp someProps={theme} />
       </ThemeProvider>
     );
@@ -428,7 +428,7 @@ describe('theming', () => {
     const MyDivWithTheme = withTheme(MyDiv);
 
     const wrapper = TestRenderer.create(
-      <ThemeProvider theme={originalTheme}>
+      <ThemeProvider blueprint={originalTheme}>
         <MyDivWithTheme />
       </ThemeProvider>
     );
@@ -444,7 +444,7 @@ describe('theming', () => {
     const newTheme = { color: 'blue' };
 
     const Theme = ({ theme }) => (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider blueprint={theme}>
         <MyDivWithTheme />
       </ThemeProvider>
     );
@@ -461,17 +461,17 @@ describe('theming', () => {
   // https://github.com/styled-components/styled-components/issues/445
   it('should use ThemeProvider theme instead of defaultProps theme after initial render', () => {
     const Text = styled.div`
-      color: ${props => props.theme.color};
+      color: ${props => props.blueprint.color};
     `;
 
     Text.defaultProps = {
-      theme: {
+      blueprint: {
         color: 'purple',
       },
     };
 
     const Theme = props => (
-      <ThemeProvider theme={{ color: 'green' }}>
+      <ThemeProvider blueprint={{ color: 'green' }}>
         <Text {...props} />
       </ThemeProvider>
     );
@@ -512,7 +512,7 @@ describe('theming', () => {
     const CompWithTheme = withTheme(Comp);
 
     const wrapper = TestRenderer.create(
-      <ThemeProvider theme={{}}>
+      <ThemeProvider blueprint={{}}>
         <CompWithTheme />
       </ThemeProvider>
     );
@@ -534,7 +534,7 @@ describe('theming', () => {
     const ref = React.createRef<Element>();
 
     renderIntoDocument(
-      <ThemeProvider theme={{}}>
+      <ThemeProvider blueprint={{}}>
         <CompWithTheme ref={ref} />
       </ThemeProvider>
     );
@@ -544,7 +544,7 @@ describe('theming', () => {
 
   // https://github.com/styled-components/styled-components/issues/1130
   it('should not break without a ThemeProvider if it has a defaultTheme', () => {
-    const MyDiv: React.FunctionComponent<{ theme: DefaultTheme }> = ({ theme }) => (
+    const MyDiv: React.FunctionComponent<{ blueprint: DefaultTheme }> = ({ blueprint: theme }) => (
       <div>{theme.color}</div>
     );
     const MyDivWithTheme = withTheme(MyDiv);
@@ -560,14 +560,14 @@ describe('theming', () => {
         !msg.includes('You are not using a ThemeProvider') ? consoleWarn(msg) : null
       );
 
-    MyDivWithTheme.defaultProps = { theme };
+    MyDivWithTheme.defaultProps = { blueprint: theme };
 
     const wrapper = TestRenderer.create(<MyDivWithTheme />);
 
     expect(wrapper.root.findByType('div').props.children).toBe('red');
 
     // Change theme
-    MyDivWithTheme.defaultProps = { theme: newTheme };
+    MyDivWithTheme.defaultProps = { blueprint: newTheme };
 
     // Change theme
     wrapper.update(<MyDivWithTheme />);
@@ -592,13 +592,13 @@ describe('theming', () => {
     };
 
     const Comp1 = styled.div`
-      background-color: ${({ theme }) => theme.palette.white};
-      color: ${({ theme }) => theme.palette.black};
+      background-color: ${({ blueprint }) => blueprint.palette.white};
+      color: ${({ blueprint }) => blueprint.palette.black};
     `;
 
     expect(() => {
       TestRenderer.create(
-        <ThemeProvider theme={theme}>
+        <ThemeProvider blueprint={theme}>
           <Comp1 />
         </ThemeProvider>
       );
@@ -624,11 +624,11 @@ describe('theming', () => {
     const theme = new Theme('2px');
 
     const Comp1 = styled.div`
-      border-radius: ${({ theme }) => theme.borderRadius};
+      border-radius: ${({ blueprint }) => blueprint.borderRadius};
     `;
 
     TestRenderer.create(
-      <ThemeProvider theme={theme}>
+      <ThemeProvider blueprint={theme}>
         <Comp1 />
       </ThemeProvider>
     );
@@ -646,7 +646,7 @@ describe('theming', () => {
       // these tests need to be changed to use error boundaries instead
       const mock = jest.spyOn(console, 'error').mockImplementation(() => {});
       TestRenderer.create(
-        <ThemeProvider theme={null}>
+        <ThemeProvider blueprint={null}>
           <div />
         </ThemeProvider>
       );
@@ -660,7 +660,7 @@ describe('theming', () => {
       // these tests need to be changed to use error boundaries instead
       const mock = jest.spyOn(console, 'error').mockImplementation(() => {});
       TestRenderer.create(
-        <ThemeProvider theme={['a', 'b', 'c']}>
+        <ThemeProvider blueprint={['a', 'b', 'c']}>
           <div />
         </ThemeProvider>
       );
@@ -675,7 +675,7 @@ describe('theming', () => {
       const mock = jest.spyOn(console, 'error').mockImplementation(() => {});
       TestRenderer.create(
         // @ts-expect-error invalid input
-        <ThemeProvider theme={42}>
+        <ThemeProvider blueprint={42}>
           <div />
         </ThemeProvider>
       );

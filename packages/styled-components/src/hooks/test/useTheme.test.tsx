@@ -1,10 +1,10 @@
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
 
-import ThemeProvider from '../../models/ThemeProvider';
 import withTheme from '../../hoc/withTheme';
-import useTheme from '../useTheme';
+import ThemeProvider from '../../models/ThemeProvider';
 import { resetStyled } from '../../test/utils';
+import useTheme from '../useTheme';
 
 let styled: ReturnType<typeof resetStyled>;
 
@@ -25,7 +25,7 @@ describe('useTheme', () => {
 
     const wrapper = TestRenderer.create(
       <div>
-        <ThemeProvider theme={mainTheme}>
+        <ThemeProvider blueprint={mainTheme}>
           <MyDivWithThemeOne />
           <MyDivWithThemeContext />
         </ThemeProvider>

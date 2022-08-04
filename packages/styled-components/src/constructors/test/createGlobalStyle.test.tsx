@@ -64,10 +64,10 @@ describe(`createGlobalStyle`, () => {
     const { render } = setup();
     const Component = createGlobalStyle({
       'h1, h2, h3, h4, h5, h6': {
-        fontFamily: ({ theme }) => theme.fonts.heading,
+        fontFamily: ({ blueprint }) => blueprint.fonts.heading,
       },
     });
-    render(<Component theme={{ fonts: { heading: 'sans-serif' } }} />);
+    render(<Component blueprint={{ fonts: { heading: 'sans-serif' } }} />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       "h1, h2, h3, h4, h5, h6 {
         font-family: sans-serif;
@@ -81,12 +81,12 @@ describe(`createGlobalStyle`, () => {
       'div, span': {
         h1: {
           span: {
-            fontFamily: ({ theme }) => theme.fonts.heading,
+            fontFamily: ({ blueprint }) => blueprint.fonts.heading,
           },
         },
       },
     });
-    render(<Component1 theme={{ fonts: { heading: 'sans-serif' } }} />);
+    render(<Component1 blueprint={{ fonts: { heading: 'sans-serif' } }} />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       "div h1 span, span h1 span {
         font-family: sans-serif;
@@ -96,9 +96,9 @@ describe(`createGlobalStyle`, () => {
 
   it(`supports theming`, () => {
     const { render } = context;
-    const Component = createGlobalStyle`div {color:${props => props.theme.color};} `;
+    const Component = createGlobalStyle`div {color:${props => props.blueprint.color};} `;
     render(
-      <ThemeProvider theme={{ color: 'black' }}>
+      <ThemeProvider blueprint={{ color: 'black' }}>
         <Component />
       </ThemeProvider>
     );
@@ -111,7 +111,7 @@ describe(`createGlobalStyle`, () => {
 
   it(`updates theme correctly`, () => {
     const { render } = context;
-    const Component = createGlobalStyle`div {color:${props => props.theme.color};} `;
+    const Component = createGlobalStyle`div {color:${props => props.blueprint.color};} `;
     let update: Function;
     class App extends React.Component {
       state = { color: 'grey' };
@@ -125,7 +125,7 @@ describe(`createGlobalStyle`, () => {
 
       render() {
         return (
-          <ThemeProvider theme={{ color: this.state.color }}>
+          <ThemeProvider blueprint={{ color: this.state.color }}>
             <Component />
           </ThemeProvider>
         );
