@@ -74,12 +74,12 @@ describe('attrs', () => {
 
   it('function form allows access to theme', () => {
     const Comp = styled.button.attrs(props => ({
-      'data-color': props.theme!.color,
+      'data-color': props.blueprint!.color,
     }))``;
 
     expect(
       TestRenderer.create(
-        <ThemeProvider theme={{ color: 'red' }}>
+        <ThemeProvider blueprint={{ color: 'red' }}>
           <Comp />
         </ThemeProvider>
       ).toJSON()
@@ -93,11 +93,11 @@ describe('attrs', () => {
 
   it('defaultProps are merged into what function attrs receives', () => {
     const Comp = styled.button.attrs(props => ({
-      'data-color': props.theme!.color,
+      'data-color': props.blueprint!.color,
     }))``;
 
     Comp.defaultProps = {
-      theme: {
+      blueprint: {
         color: 'red',
       },
     };

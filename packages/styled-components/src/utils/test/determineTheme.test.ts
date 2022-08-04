@@ -2,8 +2,8 @@ import determineTheme from '../determineTheme';
 
 const theme = { color: 'red' };
 const fallback = { color: 'blue' };
-const props = { theme };
-const defaultProps = { theme: fallback };
+const props = { blueprint: theme };
+const defaultProps = { blueprint: fallback };
 
 describe('determineTheme', () => {
   it('should take precedence over ThemeProvider', () => {

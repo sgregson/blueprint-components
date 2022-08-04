@@ -6,5 +6,9 @@ export default function determineTheme(
   providedTheme: any,
   defaultProps: any = EMPTY_OBJECT
 ) {
-  return (props.theme !== defaultProps.theme && props.theme) || providedTheme || defaultProps.theme;
+  return (
+    (props.blueprint !== defaultProps.blueprint && props.blueprint) ||
+    providedTheme ||
+    defaultProps.blueprint
+  );
 }

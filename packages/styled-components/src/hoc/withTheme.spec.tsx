@@ -14,7 +14,7 @@ describe('withTheme', () => {
   it('should not throw an error when defaultProps is defined', () => {
     const Component = () => <div>Wrapped Component</div>;
     Component.defaultProps = {
-      theme: {},
+      blueprint: {},
     };
 
     const WrappedComponent = withTheme(Component);
@@ -44,7 +44,7 @@ describe('withTheme', () => {
     });
 
     const wrapper = TestRenderer.create(
-      <ThemeProvider theme={{ color: 'red' }}>
+      <ThemeProvider blueprint={{ color: 'red' }}>
         <WrappedComponent />
       </ThemeProvider>
     );

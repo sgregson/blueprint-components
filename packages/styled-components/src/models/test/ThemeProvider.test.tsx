@@ -13,17 +13,17 @@ describe('ThemeProvider', () => {
   });
 
   it('should not throw an error when no children are passed', () => {
-    TestRenderer.create(<ThemeProvider theme={{}} />);
+    TestRenderer.create(<ThemeProvider blueprint={{}} />);
   });
 
   it("should accept a theme prop that's a plain object", () => {
-    TestRenderer.create(<ThemeProvider theme={{ main: 'black' }} />);
+    TestRenderer.create(<ThemeProvider blueprint={{ main: 'black' }} />);
   });
 
   it('should render its child', () => {
     const child = <p>Child!</p>;
     const wrapper = TestRenderer.create(
-      <ThemeProvider theme={{ main: 'black' }}>{child}</ThemeProvider>
+      <ThemeProvider blueprint={{ main: 'black' }}>{child}</ThemeProvider>
     );
 
     expect(wrapper.toJSON()).toMatchSnapshot();
@@ -37,8 +37,8 @@ describe('ThemeProvider', () => {
     const MyDivWithTheme = withTheme(MyDiv);
 
     const wrapper = TestRenderer.create(
-      <ThemeProvider theme={outerTheme}>
-        <ThemeProvider theme={innerTheme}>
+      <ThemeProvider blueprint={outerTheme}>
+        <ThemeProvider blueprint={innerTheme}>
           <MyDivWithTheme />
         </ThemeProvider>
       </ThemeProvider>
@@ -59,9 +59,9 @@ describe('ThemeProvider', () => {
     const MyDivWithTheme = withTheme(MyDiv);
 
     const wrapper = TestRenderer.create(
-      <ThemeProvider theme={outerestTheme}>
-        <ThemeProvider theme={outerTheme}>
-          <ThemeProvider theme={innerTheme}>
+      <ThemeProvider blueprint={outerestTheme}>
+        <ThemeProvider blueprint={outerTheme}>
+          <ThemeProvider blueprint={innerTheme}>
             <MyDivWithTheme />
           </ThemeProvider>
         </ThemeProvider>
@@ -88,10 +88,10 @@ describe('ThemeProvider', () => {
 
     const wrapper = TestRenderer.create(
       <div>
-        <ThemeProvider theme={themes.one}>
+        <ThemeProvider blueprint={themes.one}>
           <MyDivWithThemeOne />
         </ThemeProvider>
-        <ThemeProvider theme={themes.two}>
+        <ThemeProvider blueprint={themes.two}>
           <MyDivWithThemeTwo />
         </ThemeProvider>
       </div>
@@ -112,8 +112,8 @@ describe('ThemeProvider', () => {
     const MyDivWithTheme = withTheme(MyDiv);
 
     const getJSX = (givenTheme = theme) => (
-      <ThemeProvider theme={givenTheme}>
-        <ThemeProvider theme={augment}>
+      <ThemeProvider blueprint={givenTheme}>
+        <ThemeProvider blueprint={augment}>
           <MyDivWithTheme />
         </ThemeProvider>
       </ThemeProvider>

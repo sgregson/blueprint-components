@@ -54,7 +54,7 @@ describe('native', () => {
     const Inner = styled.View``;
 
     Inner.defaultProps = {
-      theme: {
+      blueprint: {
         fontSize: 12,
       },
       style: {
@@ -65,7 +65,7 @@ describe('native', () => {
     const Outer = styled(Inner)``;
 
     Outer.defaultProps = {
-      theme: {
+      blueprint: {
         fontSize: 16,
       },
       style: {
@@ -75,11 +75,11 @@ describe('native', () => {
 
     expect(Outer.defaultProps).toMatchInlineSnapshot(`
       Object {
+        "blueprint": Object {
+          "fontSize": 16,
+        },
         "style": Object {
           "backgroundColor": "silver",
-        },
-        "theme": Object {
-          "fontSize": 16,
         },
       }
     `);
@@ -335,11 +335,11 @@ describe('native', () => {
 
     it('function form allows access to theme', () => {
       const Comp = styled.Text.attrs(props => ({
-        'data-color': props.theme.color,
+        'data-color': props.blueprint.color,
       }))``;
 
       const wrapper = TestRenderer.create(
-        <ThemeProvider theme={{ color: 'red' }}>
+        <ThemeProvider blueprint={{ color: 'red' }}>
           <Comp>Something else</Comp>
         </ThemeProvider>
       );
@@ -354,10 +354,12 @@ describe('native', () => {
 
     it('theme prop works', () => {
       const Comp = styled.Text`
-        color: ${({ theme }) => theme.myColor};
+        color: ${({ blueprint }) => blueprint.myColor};
       `;
 
-      const wrapper = TestRenderer.create(<Comp theme={{ myColor: 'red' }}>Something else</Comp>);
+      const wrapper = TestRenderer.create(
+        <Comp blueprint={{ myColor: 'red' }}>Something else</Comp>
+      );
       const text = wrapper.root.findByType(Text);
 
       expect(text.props.style).toMatchObject({ color: 'red' });
@@ -365,9 +367,9 @@ describe('native', () => {
 
     it('theme in defaultProps works', () => {
       const Comp = styled.Text`
-        color: ${({ theme }) => theme.myColor};
+        color: ${({ blueprint }) => blueprint.myColor};
       `;
-      Comp.defaultProps = { theme: { myColor: 'red' } };
+      Comp.defaultProps = { blueprint: { myColor: 'red' } };
 
       const wrapper = TestRenderer.create(<Comp>Something else</Comp>);
       const text = wrapper.root.findByType(Text);

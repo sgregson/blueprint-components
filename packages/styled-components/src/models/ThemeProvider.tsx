@@ -33,7 +33,7 @@ type ThemeArgument = DefaultTheme | ThemeFn;
 
 type Props = {
   children?: React.ReactChild;
-  theme: ThemeArgument;
+  blueprint: ThemeArgument;
 };
 
 export const ThemeContext = React.createContext<DefaultTheme | undefined>(undefined);
@@ -72,8 +72,8 @@ function mergeTheme(theme: ThemeArgument, outerTheme?: DefaultTheme): DefaultThe
 export default function ThemeProvider(props: Props): JSX.Element | null {
   const outerTheme = useContext(ThemeContext);
   const themeContext = useMemo(
-    () => mergeTheme(props.theme, outerTheme),
-    [props.theme, outerTheme]
+    () => mergeTheme(props.blueprint, outerTheme),
+    [props.blueprint, outerTheme]
   );
 
   if (!props.children) {
